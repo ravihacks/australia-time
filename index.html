@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australia Live Time Clocks & Timezone Converter</title>
+    
+    <!-- SEO Optimization -->
+    <meta name="description" content="Live Australia Time Clocks and Timezone Converter. Instantly view and convert times across Sydney, Melbourne, Brisbane, Perth, Adelaide, Hobart, and more in a beautiful responsive interface.">
+    <meta name="keywords" content="Australia time, timezone converter, exact time, Sydney time, Perth time, AEST, AEDT, AWST, ACST, live clock, world clock">
+    <meta name="author" content="Australia Time Converter">
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="Australia Live Time Clocks & Converter">
+    <meta property="og:description" content="Live Australia Time Clocks and Timezone Converter. View times across all Australian states and convert easily.">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Top Ad Placeholder -->
+        <div class="ad-placeholder">
+            <span>Google Ad / Paid Ad Placeholder (Top Banner)</span>
+        </div>
+
+        <header>
+            <div class="segmented-control">
+                <input type="radio" name="tab" id="tab-live" checked>
+                <label for="tab-live">World Clock</label>
+                
+                <input type="radio" name="tab" id="tab-convert">
+                <label for="tab-convert">Converter</label>
+            </div>
+            <h1 id="header-title">World Clock</h1>
+        </header>
+
+        <!-- LIVE CLOCKS VIEW -->
+        <main id="view-live" class="view active">
+            <ul class="clock-list" id="clock-list">
+                <!-- populated by js -->
+            </ul>
+        </main>
+
+        <!-- CONVERTER VIEW -->
+        <main id="view-convert" class="view">
+            <div class="converter-box">
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label>From State / Territory</label>
+                    <div class="custom-select-wrapper">
+                        <select id="convert-source" class="apple-select" aria-label="Select source state"></select>
+                        <div class="custom-select-arrow"></div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Local Time</label>
+                    <div class="time-picker-container" aria-label="Time picker wheel">
+                        <div class="picker-highlight"></div>
+                        <div class="picker-column" id="picker-hour"></div>
+                        <div class="picker-column" id="picker-minute"></div>
+                        <div class="picker-column" id="picker-ampm">
+                            <div class="picker-spacer"></div>
+                            <div class="picker-item" data-val="AM">AM</div>
+                            <div class="picker-item" data-val="PM">PM</div>
+                            <div class="picker-spacer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Converted Times</h2>
+            <ul class="clock-list" id="convert-list">
+                <!-- populated by js -->
+            </ul>
+        </main>
+        
+        <!-- Footer & Bottom Ad Placeholder -->
+        <footer>
+            <div class="ad-placeholder">
+                <span>Google Ad / Paid Ad Placeholder (Footer Banner)</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <p class="copyright">&copy; 2026 Australia Time Converter. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
