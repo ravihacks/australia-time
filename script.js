@@ -29,7 +29,7 @@ tabLive.addEventListener('change', () => {
     if (tabLive.checked) {
         viewLive.classList.add('active');
         viewConvert.classList.remove('active');
-        headerTitle.textContent = "World Clock";
+        headerTitle.textContent = "Australia State Wise";
         startLiveClocks();
     }
 });
@@ -76,7 +76,7 @@ function getLiveOffsetString(date, tz) {
     return `${dayStr}, ${hourStr}`;
 }
 
-function renderClockItem(state, dateObj, dayOffsetString) {
+function createClockNode(state, dateObj, dayOffsetString) {
     let timeStr = "";
     if (state.timeZone) {
         timeStr = dateObj.toLocaleTimeString('en-US', {
@@ -97,27 +97,57 @@ function renderClockItem(state, dateObj, dayOffsetString) {
     const timeOnly = timeMatch ? timeMatch[1] : timeStr;
     const ampmStr = timeMatch && timeMatch[2] ? timeMatch[2] : '';
 
-    return `
-        <li class="clock-item">
-            <div class="clock-left">
-                <div class="clock-offset">${dayOffsetString}</div>
-                <div class="clock-city">${state.capital}</div>
-                <div class="clock-state">${state.name}</div>
-            </div>
-            <div class="clock-right">
-                <div class="clock-time">${timeOnly}</div>
-                <div class="clock-ampm">${ampmStr}</div>
-            </div>
-        </li>
-    `;
+    const li = document.createElement('li');
+    li.className = 'clock-item';
+
+    const left = document.createElement('div');
+    left.className = 'clock-left';
+    
+    const offset = document.createElement('div');
+    offset.className = 'clock-offset';
+    offset.textContent = dayOffsetString;
+    
+    const city = document.createElement('div');
+    city.className = 'clock-city';
+    city.textContent = state.capital;
+    
+    const stateDiv = document.createElement('div');
+    stateDiv.className = 'clock-state';
+    stateDiv.textContent = state.name;
+
+    left.appendChild(offset);
+    left.appendChild(city);
+    left.appendChild(stateDiv);
+
+    const right = document.createElement('div');
+    right.className = 'clock-right';
+    
+    const timeDiv = document.createElement('div');
+    timeDiv.className = 'clock-time';
+    timeDiv.textContent = timeOnly;
+    
+    const ampmDiv = document.createElement('div');
+    ampmDiv.className = 'clock-ampm';
+    ampmDiv.textContent = ampmStr;
+
+    right.appendChild(timeDiv);
+    right.appendChild(ampmDiv);
+
+    li.appendChild(left);
+    li.appendChild(right);
+
+    return li;
 }
 
 function renderLiveClocks() {
     const now = new Date();
-    clockList.innerHTML = statesData.map(state => {
+    clockList.replaceChildren(); // Safely clear DOM
+    
+    statesData.forEach(state => {
         const offsetString = getLiveOffsetString(now, state.timeZone);
-        return renderClockItem(state, now, offsetString);
-    }).join('');
+        const node = createClockNode(state, now, offsetString);
+        clockList.appendChild(node);
+    });
 }
 
 function startLiveClocks() {
@@ -131,13 +161,24 @@ function stopLiveClocks() {
 
 // OS Picker Generating Functions
 function createPickerItems(container, min, max, padZero) {
-    let html = '<div class="picker-spacer"></div>';
+    container.replaceChildren(); // Safely clear nodes
+    
+    let topSpacer = document.createElement('div');
+    topSpacer.className = 'picker-spacer';
+    container.appendChild(topSpacer);
+
     for (let i = min; i <= max; i++) {
         const val = padZero ? String(i).padStart(2, '0') : String(i);
-        html += `<div class="picker-item" data-val="${val}">${val}</div>`;
+        let item = document.createElement('div');
+        item.className = 'picker-item';
+        item.dataset.val = val;
+        item.textContent = val;
+        container.appendChild(item);
     }
-    html += '<div class="picker-spacer"></div>';
-    container.innerHTML = html;
+    
+    let botSpacer = document.createElement('div');
+    botSpacer.className = 'picker-spacer';
+    container.appendChild(botSpacer);
 }
 
 function setupPickerColumn(colId, updateValueCb) {
@@ -237,10 +278,13 @@ function updateConverter() {
     options.timeZone = sourceState.timeZone;
     const sourceLocDate = new Date(now.toLocaleString('en-US', options));
 
-    let html = '';
+    // Use fragment for batched UI performance securely
+    const fragment = document.createDocumentFragment();
+    
     statesData.forEach(state => {
         if (state.id === sourceId) {
-             html += renderClockItem({ ...state, timeZone: null }, baseDate, "Source Time");
+             const node = createClockNode({ ...state, timeZone: null }, baseDate, "Source Time");
+             fragment.appendChild(node);
              return;
         }
 
@@ -261,10 +305,11 @@ function updateConverter() {
         else if (diffHours < 0) hourStr = `${diffHours}HRS`;
         else hourStr = "0HRS";
 
-        html += renderClockItem({ ...state, timeZone: null }, targetTimeDate, `${dayDiffStr}, ${hourStr}`);
+        const node = createClockNode({ ...state, timeZone: null }, targetTimeDate, `${dayDiffStr}, ${hourStr}`);
+        fragment.appendChild(node);
     });
 
-    convertList.innerHTML = html;
+    convertList.replaceChildren(fragment); // Secure DOM injection
 }
 
 // Init

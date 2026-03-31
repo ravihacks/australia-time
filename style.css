@@ -219,6 +219,9 @@ h1 {
     letter-spacing: 0.5px;
 }
 
+/* Utilities */
+.mb-4 { margin-bottom: 20px; }
+
 /* CUSTOM DROP DOWN (Apple theme) */
 .custom-select-wrapper {
     position: relative;

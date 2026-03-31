@@ -10,11 +10,11 @@
     <meta name="keywords" content="Australia time, timezone converter, exact time, Sydney time, Perth time, AEST, AEDT, AWST, ACST, live clock, world clock">
     <meta name="author" content="Australia Time Converter">
     
-    <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="Australia Live Time Clocks & Converter">
-    <meta property="og:description" content="Live Australia Time Clocks and Timezone Converter. View times across all Australian states and convert easily.">
-    <meta property="og:type" content="website">
-    
+    <!-- Security Headers (CSP & Hardening) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="Referrer-Policy" content="no-referrer">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,12 +28,12 @@
         <header>
             <div class="segmented-control">
                 <input type="radio" name="tab" id="tab-live" checked>
-                <label for="tab-live">World Clock</label>
+                <label for="tab-live">Australia State Wise</label>
                 
                 <input type="radio" name="tab" id="tab-convert">
                 <label for="tab-convert">Converter</label>
             </div>
-            <h1 id="header-title">World Clock</h1>
+            <h1 id="header-title">Australia State Wise</h1>
         </header>
 
         <!-- LIVE CLOCKS VIEW -->
@@ -46,7 +46,7 @@
         <!-- CONVERTER VIEW -->
         <main id="view-convert" class="view">
             <div class="converter-box">
-                <div class="input-group" style="margin-bottom: 20px;">
+                <div class="input-group mb-4">
                     <label>From State / Territory</label>
                     <div class="custom-select-wrapper">
                         <select id="convert-source" class="apple-select" aria-label="Select source state"></select>
