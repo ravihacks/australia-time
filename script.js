@@ -29,7 +29,7 @@ tabLive.addEventListener('change', () => {
     if (tabLive.checked) {
         viewLive.classList.add('active');
         viewConvert.classList.remove('active');
-        headerTitle.textContent = "Australia State Wise";
+        headerTitle.textContent = "Australia Live Clock";
         startLiveClocks();
     }
 });
